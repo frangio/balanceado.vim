@@ -1,0 +1,5 @@
+Do (Insert an opening parenthesis):
+  i(-
+
+Expect (Parenthesis inserted after cursor):
+  (-)
