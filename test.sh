@@ -4,8 +4,8 @@ vader="~/.config/nvim/plugged/vader.vim"
 
 vimrc="
 filetype off
-set rtp+=$vader
-set rtp+=.
+set runtimepath+=$vader
+set runtimepath+=.
 set backspace+=start
 filetype plugin indent on
 syntax enable
