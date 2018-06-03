@@ -1,4 +1,4 @@
-" balanceado.vim - Intuitive delimiter prediction
+" balanceado.vim - Intuitive insertion of balanced delimiters
 "
 " Author: Francisco Giordano <frangio.1@gmail.com>
 " License: MIT License
