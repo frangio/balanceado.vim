@@ -18,11 +18,13 @@ endfunction
 
 function! balanceado#backspace()
   let l:col = col('.') - 1
-  let l:pre = getline('.')[l:col - 1]
+  let l:line = getline('.')
+  let l:pre = l:line[l:col - 1]
+  let l:post = l:line[l:col]
 
   if l:pre ==# ')'
     return s:left
-  elseif l:pre ==# '('
+  elseif l:pre ==# '(' && l:post ==# ')'
     return s:right . "\<BS>\<BS>"
   else
     return "\<BS>"
