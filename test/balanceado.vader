@@ -3,3 +3,9 @@ Do (Insert an opening parenthesis):
 
 Expect (Parenthesis inserted after cursor):
   (-)
+
+Do (Insert opening and closing parentheses):
+  i(a)b
+
+Expect (Balanced parentheses):
+  (a)b
