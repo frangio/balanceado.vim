@@ -1,8 +1,12 @@
+-----
+
 Do (Insert an opening parenthesis):
   i(-
 
 Expect (Parenthesis inserted after cursor):
   (-)
+
+-----
 
 Do (Insert opening and closing parentheses):
   i(a)b
@@ -10,11 +14,15 @@ Do (Insert opening and closing parentheses):
 Expect (Balanced parentheses):
   (a)b
 
+-----
+
 Do (Insert closing parenthesis):
   i)
 
 Expect (Closing parenthesis inserted):
   )
+
+-----
 
 Given (Lone opening parenthesis):
   a(
@@ -24,3 +32,5 @@ Do (Delete opening parenthesis):
 
 Expect (Only parenthesis is deleted):
   a
+
+-----
