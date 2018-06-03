@@ -9,3 +9,9 @@ Do (Insert opening and closing parentheses):
 
 Expect (Balanced parentheses):
   (a)b
+
+Do (Insert closing parenthesis):
+  i)
+
+Expect (Closing parenthesis inserted):
+  )
