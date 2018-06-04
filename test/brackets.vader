@@ -15,3 +15,38 @@ Expect (Balanced brackets):
   {a}b
 
 -----
+
+Do (Insert closing bracket):
+  i}
+
+Expect (Closing bracket inserted):
+  }
+
+-----
+
+Do (Backspace past closing bracket):
+  i{a}\<BS>b
+
+Expect (Cursor moved and closing bracket not deleted):
+  {ab}
+
+-----
+
+Do (Backspace past opening bracket):
+  ia{\<BS>
+
+Expect (Brackets deleted):
+  a
+
+-----
+
+Given (Lone opening bracket):
+  a{
+
+Do (Delete opening bracket):
+  A\<BS>
+
+Expect (Only bracket is deleted):
+  a
+
+-----

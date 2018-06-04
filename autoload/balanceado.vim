@@ -22,9 +22,9 @@ function! balanceado#backspace()
   let l:pre = l:line[l:col - 1]
   let l:post = l:line[l:col]
 
-  if l:pre ==# ')'
+  if s:is_closing(l:pre)
     return s:left
-  elseif l:pre ==# '(' && l:post ==# ')'
+  elseif s:is_opening(l:pre) && l:post ==# s:closing(l:pre)
     return s:right . "\<BS>\<BS>"
   else
     return "\<BS>"
