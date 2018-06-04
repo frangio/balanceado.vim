@@ -24,6 +24,22 @@ Expect (Closing parenthesis inserted):
 
 -----
 
+Do (Backspace past closing parenthesis):
+  i(a)\<BS>b
+
+Expect (Cursor moved and closing parenthesis not deleted):
+  (ab)
+
+-----
+
+Do (Backspace past opening parenthesis):
+  ia(\<BS>
+
+Expect (Parentheses deleted):
+  a
+
+-----
+
 Given (Lone opening parenthesis):
   a(
 
