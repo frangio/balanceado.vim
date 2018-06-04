@@ -7,9 +7,9 @@ function! balanceado#character(char)
   let l:col = col('.') - 1
   let l:post = getline('.')[l:col]
 
-  if a:char ==# '('
-    return '()' . s:left
-  elseif a:char ==# ')' && l:post ==# ')'
+  if s:is_opening(a:char)
+    return a:char . s:closing(a:char) . s:left
+  elseif s:is_closing(a:char) && l:post ==# a:char
     return s:right
   else
     return a:char
@@ -28,6 +28,24 @@ function! balanceado#backspace()
     return s:right . "\<BS>\<BS>"
   else
     return "\<BS>"
+  endif
+endfunction
+
+function! s:is_opening(char)
+  return a:char ==# '(' || a:char ==# '{'
+endfunction
+
+function! s:is_closing(char)
+  return a:char ==# ')' || a:char ==# '}'
+endfunction
+
+function! s:closing(char)
+  if a:char ==# '('
+    return ')'
+  elseif a:char ==# '{'
+    return '}'
+  else
+    throw 'no matching closing delimiter found'
   endif
 endfunction
 

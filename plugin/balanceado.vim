@@ -7,3 +7,5 @@ inoremap <expr> <BS>    balanceado#backspace()
 
 inoremap <expr> (       balanceado#character('(')
 inoremap <expr> )       balanceado#character(')')
+inoremap <expr> {       balanceado#character('{')
+inoremap <expr> }       balanceado#character('}')

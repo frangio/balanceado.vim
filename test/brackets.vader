@@ -1,0 +1,17 @@
+-----
+
+Do (Insert an opening bracket):
+  i{-
+
+Expect (Bracket inserted after cursor):
+  {-}
+
+-----
+
+Do (Insert opening and closing brackets):
+  i{a}b
+
+Expect (Balanced brackets):
+  {a}b
+
+-----
