@@ -9,3 +9,8 @@ inoremap <expr> (       balanceado#character('(')
 inoremap <expr> )       balanceado#character(')')
 inoremap <expr> {       balanceado#character('{')
 inoremap <expr> }       balanceado#character('}')
+
+augroup balanceado
+  autocmd!
+  autocmd BufEnter * call balanceado#set_up()
+augroup end

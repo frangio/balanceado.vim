@@ -3,6 +3,19 @@
 " Author: Francisco Giordano <frangio.1@gmail.com>
 " License: MIT License
 
+function! balanceado#set_up()
+  let b:balanceado_open = { }
+  let b:balanceado_close = { }
+
+  call balanceado#add_pair('(', ')')
+  call balanceado#add_pair('{', '}')
+endfunction
+
+function! balanceado#add_pair(open, close)
+  let b:balanceado_open[a:open] = a:close
+  let b:balanceado_close[a:close] = a:open
+endfunction
+
 function! balanceado#character(char)
   let l:col = col('.') - 1
   let l:post = getline('.')[l:col]
@@ -32,18 +45,16 @@ function! balanceado#backspace()
 endfunction
 
 function! s:is_opening(char)
-  return a:char ==# '(' || a:char ==# '{'
+  return has_key(b:balanceado_open, a:char)
 endfunction
 
 function! s:is_closing(char)
-  return a:char ==# ')' || a:char ==# '}'
+  return has_key(b:balanceado_close, a:char)
 endfunction
 
 function! s:closing(char)
-  if a:char ==# '('
-    return ')'
-  elseif a:char ==# '{'
-    return '}'
+  if has_key(b:balanceado_open, a:char)
+    return b:balanceado_open[a:char]
   else
     throw 'no matching closing delimiter found'
   endif
