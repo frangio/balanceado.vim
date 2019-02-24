@@ -3,6 +3,17 @@
 " Author: Francisco Giordano <frangio.1@gmail.com>
 " License: MIT License
 
+let s:close_for_open = {}
+let s:open_for_close = {}
+
+function! balanceado#register_pair(open, close)
+  execute 'inoremap <expr>' a:open  'balanceado#character("' . escape(a:open , '"') . '")'
+  execute 'inoremap <expr>' a:close 'balanceado#character("' . escape(a:close, '"') . '")'
+
+  let s:close_for_open[a:open]  = a:close
+  let s:open_for_close[a:close] = a:open
+endfunction
+
 function! balanceado#InsertEnter()
   let s:stack = s:stack_init()
 endfunction
@@ -53,17 +64,13 @@ endfunction
 
 
 function! s:is_open(char)
-  return a:char ==# '('
+  return has_key(s:close_for_open, a:char)
 endfunction
 
 function! s:is_close(char)
-  return a:char ==# ')'
+  return has_key(s:open_for_close, a:char)
 endfunction
 
 function! s:get_close(char)
-  if a:char ==# '('
-    return ')'
-  else
-    throw 'no matching closing delimiter found'
-  endif
+  return get(s:close_for_open, a:char)
 endfunction
