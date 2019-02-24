@@ -7,6 +7,8 @@ inoremap <expr> <Esc>   balanceado#Esc()
 inoremap <expr> <BS>    balanceado#BS()
 
 call balanceado#register_pair('(', ')')
+call balanceado#register_pair('{', '}')
+call balanceado#register_pair('[', ']')
 
 augroup balanceado
   autocmd!
