@@ -1,9 +1,9 @@
 -----
 
 Do (Insert an opening parenthesis):
-  i(-
+  i(-\<Esc>
 
-Expect (Parenthesis inserted after cursor):
+Expect (Parenthesis inserted after exiting insert mode):
   (-)
 
 -----
@@ -21,14 +21,6 @@ Do (Insert closing parenthesis):
 
 Expect (Closing parenthesis inserted):
   )
-
------
-
-Do (Backspace past closing parenthesis):
-  i(a)\<BS>b
-
-Expect (Cursor moved and closing parenthesis not deleted):
-  (ab)
 
 -----
 

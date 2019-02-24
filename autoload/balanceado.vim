@@ -3,62 +3,67 @@
 " Author: Francisco Giordano <frangio.1@gmail.com>
 " License: MIT License
 
-function! balanceado#set_up()
-  let b:balanceado_open = { }
-  let b:balanceado_close = { }
-
-  call balanceado#add_pair('(', ')')
-  call balanceado#add_pair('{', '}')
+function! balanceado#InsertEnter()
+  let s:stack = s:stack_init()
 endfunction
 
-function! balanceado#add_pair(open, close)
-  let b:balanceado_open[a:open] = a:close
-  let b:balanceado_close[a:close] = a:open
+function! balanceado#Esc()
+  return s:stack_undo(s:stack) . "\<Esc>"
+endfunction
+
+function! balanceado#BS()
+  let l:char = matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
+  call s:stack_pop(s:stack, l:char)
+  return "\<BS>"
 endfunction
 
 function! balanceado#character(char)
-  let l:col = col('.') - 1
-  let l:post = getline('.')[l:col]
+  call s:stack_push(s:stack, a:char)
+  return a:char
+endfunction
 
-  if s:is_opening(a:char)
-    return a:char . s:closing(a:char) . s:left
-  elseif s:is_closing(a:char) && l:post ==# a:char
-    return s:right
-  else
-    return a:char
+
+function! s:stack_init()
+  return []
+endfunction
+
+function! s:stack_undo(stack)
+  return join(a:stack, '')
+endfunction
+
+function! s:stack_push(stack, char)
+  if s:is_open(a:char)
+    call insert(a:stack, s:get_close(a:char))
+  elseif s:is_close(a:char)
+    if len(a:stack) > 0
+      call remove(a:stack, 0)
+    endif
   endif
 endfunction
 
-function! balanceado#backspace()
-  let l:col = col('.') - 1
-  let l:line = getline('.')
-  let l:pre = l:line[l:col - 1]
-  let l:post = l:line[l:col]
-
-  if s:is_closing(l:pre)
-    return s:left
-  elseif s:is_opening(l:pre) && l:post ==# s:closing(l:pre)
-    return s:right . "\<BS>\<BS>"
-  else
-    return "\<BS>"
+function! s:stack_pop(stack, char)
+  if s:is_close(a:char)
+    call insert(a:stack, a:char)
+  elseif s:is_open(a:char)
+    if len(a:stack) > 0
+      call remove(a:stack, 0)
+    endif
   endif
 endfunction
 
-function! s:is_opening(char)
-  return has_key(b:balanceado_open, a:char)
+
+function! s:is_open(char)
+  return a:char ==# '('
 endfunction
 
-function! s:is_closing(char)
-  return has_key(b:balanceado_close, a:char)
+function! s:is_close(char)
+  return a:char ==# ')'
 endfunction
 
-function! s:closing(char)
-  if has_key(b:balanceado_open, a:char)
-    return b:balanceado_open[a:char]
+function! s:get_close(char)
+  if a:char ==# '('
+    return ')'
   else
     throw 'no matching closing delimiter found'
   endif
 endfunction
-
-let s:left = "\<C-G>U\<Left>"
-let s:right = "\<C-G>U\<Right>"
