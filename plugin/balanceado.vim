@@ -5,6 +5,7 @@
 
 inoremap <expr> <Esc>   balanceado#Esc()
 inoremap <expr> <BS>    balanceado#BS()
+inoremap <expr> <CR>    balanceado#CR()
 
 call balanceado#register_pair('(', ')')
 call balanceado#register_pair('{', '}')

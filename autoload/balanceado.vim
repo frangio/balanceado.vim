@@ -28,6 +28,14 @@ function! balanceado#BS()
   return "\<BS>"
 endfunction
 
+function! balanceado#CR()
+  let l:char = matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
+  if s:is_open(l:char)
+    call s:stack_push(s:stack, "\<CR>")
+  endif
+  return "\<CR>"
+endfunction
+
 function! balanceado#character(char)
   call s:stack_push(s:stack, a:char)
   return a:char
@@ -49,6 +57,8 @@ function! s:stack_push(stack, char)
     if len(a:stack) > 0
       call remove(a:stack, 0)
     endif
+  elseif a:char ==# "\<CR>"
+    call insert(a:stack, a:char)
   endif
 endfunction
 
